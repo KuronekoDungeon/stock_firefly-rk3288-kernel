@@ -61,6 +61,7 @@ struct act8846 {
 	int chip_irq;
 	int pmic_sleep_gpio; /* */
 	int pmic_hold_gpio; /* */
+	int pmic_poweroff_gpio; /* */
 	int pmic_cpu_det_gpio;
 	int pmic_usb_hub_reset_gpio;
 	unsigned int dcdc_slp_voltage[3]; /* buckx_voltage in uV */
@@ -783,6 +784,12 @@ static struct act8846_board *act8846_parse_dt(struct act8846 *act8846)
 		if (!gpio_is_valid(gpio)) 
 			printk("invalid gpio: %d\n",gpio);
 	pdata->pmic_hold_gpio = gpio;	
+#if defined(CONFIG_RK_BOARD_HOTACK_T031)
+	gpio = of_get_named_gpio(act8846_pmic_np,"gpios", 2);
+		if (!gpio_is_valid(gpio))
+			printk("invalid gpio: %d\n",gpio);
+	pdata->pmic_poweroff_gpio = gpio;
+#endif
 	pdata->pm_off = of_property_read_bool(act8846_pmic_np,"act8846,system-power-controller");
 
     gpio = of_get_named_gpio(act8846_pmic_np,"cpu_det_gpio", 0);
@@ -818,6 +825,19 @@ void act8846_device_shutdown(void)
 	}
 	
 #if 1
+
+#if defined(CONFIG_RK_BOARD_HOTACK_T031)
+	if (act8846->pmic_poweroff_gpio) {
+		gpio_direction_output(act8846->pmic_poweroff_gpio,1);
+		mdelay(100);
+	}
+#endif
+#if defined(CONFIG_RK_BOARD_NETXEON_R89)
+	act8846_reg_read(act8846,0xc3);
+	act8846_set_bits(act8846, 0xc3,(0x1<<3),(0x1<<3));
+	act8846_set_bits(act8846, 0xc3,(0x1<<4),(0x1<<4));
+#endif
+
 	if (act8846->pmic_hold_gpio) {
 			gpio_direction_output(act8846->pmic_hold_gpio,0);
 			mdelay(100);
@@ -969,7 +989,22 @@ static int act8846_i2c_probe(struct i2c_client *i2c, const struct i2c_device_id 
 			printk("%s: act8846_pmic_sleep=%x\n", __func__, ret);
 	}
 	#endif
-	
+#if defined(CONFIG_RK_BOARD_HOTACK_T031)
+	#ifdef CONFIG_OF
+	act8846->pmic_poweroff_gpio = pdev->pmic_poweroff_gpio;
+	if (act8846->pmic_poweroff_gpio) {
+			ret = gpio_request(act8846->pmic_poweroff_gpio, "act8846_pmic_poweroff");
+			if (ret < 0) {
+				dev_err(act8846->dev,"Failed to request gpio %d with ret:""%d\n",	act8846->pmic_poweroff_gpio, ret);
+				return IRQ_NONE;
+			}
+			gpio_direction_output(act8846->pmic_poweroff_gpio,0);
+			ret = gpio_get_value(act8846->pmic_poweroff_gpio);
+	//		gpio_free(act8846->pmic_poweroff_gpio);
+			printk("%s: act8846_pmic_poweroff=%x\n", __func__, ret);
+	}
+	#endif
+#endif
     /****************************set cpu_det high **************************/
     #ifdef CONFIG_OF
     act8846->pmic_cpu_det_gpio = pdev->pmic_cpu_det_gpio;

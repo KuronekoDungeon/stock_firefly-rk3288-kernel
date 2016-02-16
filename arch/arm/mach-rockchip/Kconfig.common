@@ -56,5 +56,23 @@ config RK_VCODEC
 
 config RK_PL330_DMA_TEST
 	bool "pl330 DMA memcpy test"
+	
+choice
+	prompt "Board model"
+	depends on ARCH_ROCKCHIP
+	default RK_BOARD_DEFAULT
+	help
+	  Select Board model.
+
+	config RK_BOARD_DEFAULT
+		bool "default"
+
+	config RK_BOARD_HOTACK_T031
+		bool "hotack-t031"
+
+	config RK_BOARD_NETXEON_R89
+		bool "netxeon-r89"
+
+endchoice
 
 endif

@@ -1580,6 +1580,10 @@ static void stmmac_check_ether_addr(struct stmmac_priv *priv)
 		if (!is_valid_ether_addr(priv->dev->dev_addr))
 			eth_mac_idb(priv->dev->dev_addr);
 		if (!is_valid_ether_addr(priv->dev->dev_addr))
+#if defined(CONFIG_RK_BOARD_HOTACK_T031) || defined(CONFIG_RK_BOARD_NETXEON_R89)
+			eth_mac_wifi(priv->dev->dev_addr);
+		if (!is_valid_ether_addr(priv->dev->dev_addr))
+#endif
 			eth_hw_addr_random(priv->dev);
 	}
 	pr_warn("%s: device MAC address %pM\n", priv->dev->name,

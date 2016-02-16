@@ -496,6 +496,7 @@ static int rk_pwm_probe(struct platform_device *pdev)
 	int cpu_id;
 	int pwm_id;
 	int gpio,flag;
+        int led;
 
 	pr_err(".. rk pwm remotectl v1.1 init\n");
 	r = platform_get_resource(pdev, IORESOURCE_MEM, 0);
@@ -566,6 +567,15 @@ static int rk_pwm_probe(struct platform_device *pdev)
 	rk_remotectl_parse_ir_keys(pdev);
 	tasklet_init(&ddata->remote_tasklet, rk_pwm_remotectl_do_something,
 		     (unsigned long)ddata);
+#if defined(CONFIG_RK_BOARD_HOTACK_T031)
+	led = of_get_named_gpio(np, "module-gpios", 1);
+	if (gpio_is_valid(led) && gpio_request(led, NULL) == 0) {
+		gpio_direction_output(led, 1);
+		gpio_free(led);
+	}
+#endif
+ 
+        
 	for (j = 0; j < num; j++) {
 		DBG("remotectl probe j = 0x%x\n", j);
 		for (i = 0; i < remotectl_button[j].nbuttons; i++) {

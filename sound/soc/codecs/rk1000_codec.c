@@ -56,7 +56,11 @@
 #define VOLUME_CODEC_PA 0xf
 
 /* rk1000 input volume,rk610 can not adjust the recording volume */
+#if defined(CONFIG_RK_BOARD_NETXEON_R89)
+#define VOLUME_INPUT 0x06
+#else
 #define VOLUME_INPUT 0x07
+#endif
 
 #define OUT_CAPLESS  (1)
 

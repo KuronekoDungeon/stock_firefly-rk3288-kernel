@@ -72,7 +72,7 @@ int eth_mac_idb(u8 *eth_mac)
 	return 0;
 }
 
-#if 0
+#if defined(CONFIG_RK_BOARD_HOTACK_T031) || defined(CONFIG_RK_BOARD_NETXEON_R89)
 /**
 *大写转小写
 *
