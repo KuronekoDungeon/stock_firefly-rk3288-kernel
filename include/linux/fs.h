@@ -2513,6 +2513,9 @@ static inline void inode_dio_end(struct inode *inode)
        if (atomic_dec_and_test(&inode->i_dio_count))
                wake_up_bit(&inode->i_state, __I_DIO_WAKEUP);
 }
+
+void inode_dio_done(struct inode *inode);
+
 extern const struct file_operations generic_ro_fops;
 
 #define special_file(m) (S_ISCHR(m)||S_ISBLK(m)||S_ISFIFO(m)||S_ISSOCK(m))
