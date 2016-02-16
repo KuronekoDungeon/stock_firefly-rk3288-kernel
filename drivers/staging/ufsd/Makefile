@@ -1,0 +1,15 @@
+EXTRA_CFLAGS += -include $(src)/fs_conf.h
+EXTRA_CFLAGS += -DNDEBUG -g0
+EXTRA_CFLAGS += -DUFSD_DEVICE=$(CONFIG_UFSD_NAME) -DUFSD_USE_ASM_DIV64
+EXTRA_CFLAGS += -DUFSD_DISABLE_UGM -DUFSD_CHECK_BDI -Wno-unused-local-typedefs
+
+ifeq ($(CONFIG_UFSD_FS),m)
+	EXTRA_CFLAGS += -DUFSD_BUILT_AS_MODULE
+endif
+
+MODULE_NAME := $(CONFIG_UFSD_NAME)
+MODULE_OBJECTS := ufsdvfs.o vfsdebug.o fool.o libufsd_$(ARCH).obj
+
+obj-$(CONFIG_UFSD_FS) += $(MODULE_NAME).o
+
+$(MODULE_NAME)-objs := $(MODULE_OBJECTS)
