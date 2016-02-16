@@ -860,7 +860,7 @@ static u32 slp_grf_uoc3_con_w_msk[2]={0x3ff0000,0x0fff0000};
 #define MS_37K (37)
 #define US_24M (24)
 
-void inline pm_io_base_map(void)
+static void inline pm_io_base_map(void)
 {
         int i;
         for(i=0;i<RK3288_I2C_NUM;i++)

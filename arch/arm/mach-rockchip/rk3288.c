@@ -637,7 +637,7 @@ static inline void rk_pm_soc_pd_resume(void)
     rkpm_ddr_printascii("\n");
 #endif    
 }
-void inline rkpm_periph_pd_dn(bool on)
+static void inline rkpm_periph_pd_dn(bool on)
 {
     rk3288_sys_set_power_domain(PD_PERI, on);
 }
