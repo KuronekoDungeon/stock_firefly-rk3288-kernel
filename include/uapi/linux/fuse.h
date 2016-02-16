@@ -175,6 +175,8 @@ struct fuse_file_lock {
 	uint32_t	pid; /* tgid */
 };
 
+#define FUSE_SHORTCIRCUIT	(1 << 31)
+
 /**
  * Bitmasks for fuse_setattr_in.valid
  */
@@ -453,13 +455,13 @@ struct fuse_create_in {
 	uint32_t	flags;
 	uint32_t	mode;
 	uint32_t	umask;
-	uint32_t	padding;
+	int32_t		lower_fd;
 };
 
 struct fuse_open_out {
 	uint64_t	fh;
 	uint32_t	open_flags;
-	uint32_t	padding;
+	int32_t		lower_fd;
 };
 
 struct fuse_release_in {
