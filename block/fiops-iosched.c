@@ -647,9 +647,6 @@ static int fiops_init_queue(struct request_queue *q, struct elevator_type *e)
 	eq->elevator_data = fiopsd;
 
 	fiopsd->queue = q;
-	spin_lock_irq(q->queue_lock);
-	q->elevator = eq;
-	spin_unlock_irq(q->queue_lock);
 
 	for (i = IDLE_WORKLOAD; i <= RT_WORKLOAD; i++)
 		fiopsd->service_tree[i] = FIOPS_RB_ROOT;
@@ -660,6 +657,10 @@ static int fiops_init_queue(struct request_queue *q, struct elevator_type *e)
 	fiopsd->write_scale = VIOS_WRITE_SCALE;
 	fiopsd->sync_scale = VIOS_SYNC_SCALE;
 	fiopsd->async_scale = VIOS_ASYNC_SCALE;
+        
+	spin_lock_irq(q->queue_lock);
+	q->elevator = eq;
+	spin_unlock_irq(q->queue_lock);
 
 	return 0;
 }
