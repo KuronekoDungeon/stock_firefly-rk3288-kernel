@@ -78,8 +78,10 @@ static mali_dvfs_info mali_dvfs_infotbl[] = {
 	{925000, 160000, 50, 65, 0},
 	{1025000, 266000, 60, 78, 0},
 	{1075000, 350000, 65, 75, 0},
-	{1125000, 400000, 70, 75, 0},
-	{1200000, 500000, 90, 100, 0},
+	{1150000, 420000, 70, 75, 0},
+	{1200000, 500000, 76, 85, 0},
+	{1250000, 600000, 86, 89, 0},
+	{1300000, 700000, 90, 100, 0},
 };
 /**
  * pointer_to_mali_dvfs_level_table.
@@ -150,7 +152,7 @@ static void update_time_in_state(int level);
 static mali_dvfs_status mali_dvfs_status_current;
 
 #define LIMIT_FPS 60
-#define LIMIT_FPS_POWER_SAVE 50
+#define LIMIT_FPS_POWER_SAVE 60
 
 /*---------------------------------------------------------------------------*/
 #ifdef CONFIG_MALI_MIDGARD_DVFS
