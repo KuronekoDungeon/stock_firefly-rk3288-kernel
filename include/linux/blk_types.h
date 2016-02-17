@@ -181,6 +181,7 @@ enum rq_flag_bits {
 	__REQ_KERNEL, 		/* direct IO to kernel pages */
 	__REQ_PM,		/* runtime pm request */
 	__REQ_NR_BITS,		/* stops here */
+        __REQ_URGENT,	/* urgent request */
 };
 
 #define REQ_WRITE		(1 << __REQ_WRITE)
@@ -193,6 +194,7 @@ enum rq_flag_bits {
 #define REQ_DISCARD		(1 << __REQ_DISCARD)
 #define REQ_WRITE_SAME		(1 << __REQ_WRITE_SAME)
 #define REQ_NOIDLE		(1 << __REQ_NOIDLE)
+#define REQ_URGENT		(1ULL << __REQ_URGENT)
 
 #define REQ_FAILFAST_MASK \
 	(REQ_FAILFAST_DEV | REQ_FAILFAST_TRANSPORT | REQ_FAILFAST_DRIVER)
