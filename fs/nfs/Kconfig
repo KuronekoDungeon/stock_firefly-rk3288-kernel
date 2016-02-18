@@ -105,17 +105,17 @@ config NFS_V4_1
 	  If unsure, say N.
 
 config PNFS_FILE_LAYOUT
-	tristate
+	tristate "PNFS_FILE_LAYOUT"
 	depends on NFS_V4_1
 	default m
 
 config PNFS_BLOCK
-	tristate
+	tristate "PNFS_BLOCK"
 	depends on NFS_V4_1 && BLK_DEV_DM
 	default m
 
 config PNFS_OBJLAYOUT
-	tristate
+	tristate "PNFS_OBJLAYOUT"
 	depends on NFS_V4_1 && SCSI_OSD_ULD
 	default m
 
