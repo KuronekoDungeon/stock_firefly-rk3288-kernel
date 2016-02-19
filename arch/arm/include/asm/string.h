@@ -38,4 +38,8 @@ extern void __memzero(void *ptr, __kernel_size_t n);
 		(__p);							\
 	})
 
+
+#define __HAVE_ARCH_MEMCMP
+extern int memcmp(const void *cs, const void *ct, size_t count);
+        
 #endif
