@@ -29,6 +29,7 @@ static const struct hdmi_video_timing hdmi_mode[] = {
 	{ {	"3840x2160p@60Hz",	60,	3840,	2160,	594000000,	296,	176,	72,	8,	88,	10,	FB_SYNC_HOR_HIGH_ACT | FB_SYNC_VERT_HIGH_ACT,	0,	0	},	97,	HDMI_3840X2160P_60HZ_4_3,	1,	OUT_P888},
 	{ {	"4096x2160p@50Hz",	50,	4096,	2160,	594000000,	128,	968,	72,	8,	88,	10,	FB_SYNC_HOR_HIGH_ACT | FB_SYNC_VERT_HIGH_ACT,	0,	0	},	101,	0,				1,	OUT_P888},
 	{ {	"4096x2160p@60Hz",	60,	4096,	2160,	594000000,	128,	88,	72,	8,	88,	10,	FB_SYNC_HOR_HIGH_ACT | FB_SYNC_VERT_HIGH_ACT,	0,	0	},	102,	0,				1,	OUT_P888},
+        { {	"1366x768p@60Hz",	60,	1366,	768,	85500000,	256,	58,	17,	1,	112,             3,	FB_SYNC_HOR_HIGH_ACT | FB_SYNC_VERT_HIGH_ACT,	0,	4	},	91,	1,	OUT_P888},
 };
 
 static int hdmi_set_info(struct rk_screen *screen, struct hdmi *hdmi)
